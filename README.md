@@ -77,9 +77,9 @@ Model Context Protocol server for AI-assisted development with Azure Developer C
 
 ## 🚀 Quick Start
 
-### Prerequisites
+### 1. Install Azure Developer CLI
 
-First, install Azure Developer CLI if you haven't already:
+If you haven't already, install Azure Developer CLI:
 
 ```bash
 # Windows (PowerShell)
@@ -92,25 +92,29 @@ brew tap azure/azd && brew install azd
 curl -fsSL https://aka.ms/install-azd.sh | bash
 ```
 
-Then enable azd extensions:
+Learn more: [Install Azure Developer CLI](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd)
+
+### 2. Enable azd Extensions
 
 ```bash
 azd config set alpha.extension.enabled on
 ```
 
-Learn more: [Install Azure Developer CLI](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd) | [Extensions Documentation](https://learn.microsoft.com/azure/developer/azure-developer-cli/azd-extensions)
+Learn more: [Extensions Documentation](https://learn.microsoft.com/azure/developer/azure-developer-cli/azd-extensions)
 
-### Install the CLI Extension
+### 3. Add the Extension Registry
 
 ```bash
-# Add the extension registry
 azd extension source add -n app -t url -l "https://raw.githubusercontent.com/jongio/azd-app/refs/heads/main/registry.json"
+```
 
-# Install the extension
+### 4. Install the Extension
+
+```bash
 azd extension install jongio.azd.app
 ```
 
-### Try It Out
+### 5. Try It Out
 
 ```bash
 # Option 1: Use an existing azd project
