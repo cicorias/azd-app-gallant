@@ -67,8 +67,8 @@ function Update-Changelog {
         return
     }
     
-    # Replace [Unreleased] with the version and date, and add a new [Unreleased] section
-    $newContent = $content -replace '## \[Unreleased\]', "## [Unreleased]`n`n## [$Version] - $Date"
+    # Replace [Unreleased] with the version and date (without adding a new Unreleased section)
+    $newContent = $content -replace '## \[Unreleased\]', "## [$Version] - $Date"
     
     # Update the comparison links at the bottom
     # Find existing version comparison links pattern
