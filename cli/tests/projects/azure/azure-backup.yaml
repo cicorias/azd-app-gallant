@@ -1,0 +1,17 @@
+name: test-app-project
+metadata:
+  template: test-project@0.0.1
+
+prerequisites:
+  - id: nodejs
+    minVersion: "20.0.0"
+  - id: pnpm
+    minVersion: "9.0.0"
+  - id: python
+    minVersion: "3.12.0"
+  - id: dotnet
+    minVersion: "9.0.0"
+  - id: azd
+    minVersion: "1.5.0"
+  - id: azure-cli
+    minVersion: "2.60.0"

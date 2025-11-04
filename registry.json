@@ -1,0 +1,87 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Azure/azure-dev/main/cli/azd/extensions/registry.schema.json",
+  "extensions": [
+    {
+      "id": "jongio.azd.app",
+      "namespace": "azdapp",
+      "displayName": "App Extension",
+      "description": "A collection of developer productivity commands for Azure Developer CLI",
+      "publisher": "jongio",
+      "tags": ["developer", "productivity", "app"],
+      "versions": [
+        {
+          "version": "0.1.0",
+          "capabilities": ["custom-commands"],
+          "usage": "azd app <command> [options]",
+          "examples": [
+            {
+              "name": "reqs",
+              "description": "Check for required prerequisites",
+              "usage": "azd app reqs"
+            },
+            {
+              "name": "deps",
+              "description": "Install dependencies for all detected projects",
+              "usage": "azd app deps"
+            },
+            {
+              "name": "run",
+              "description": "Run the development environment (services from azure.yaml, Aspire, pnpm, or docker compose)",
+              "usage": "azd app run"
+            },
+            {
+              "name": "logs",
+              "description": "View logs from running services",
+              "usage": "azd app logs [service-name]"
+            },
+            {
+              "name": "info",
+              "description": "Show information about running services",
+              "usage": "azd app info"
+            },
+            {
+              "name": "version",
+              "description": "Show version information",
+              "usage": "azd app version"
+            }
+          ],
+          "entryPoint": "app",
+          "artifacts": {
+            "windows-amd64": {
+              "url": "https://github.com/jongio/azd-app/releases/download/cli-v0.1.0/app-windows-amd64.zip",
+              "checksum": {
+                "algorithm": "sha256",
+                "value": "to-be-calculated"
+              },
+              "entryPoint": "app.exe"
+            },
+            "linux-amd64": {
+              "url": "https://github.com/jongio/azd-app/releases/download/cli-v0.1.0/app-linux-amd64.tar.gz",
+              "checksum": {
+                "algorithm": "sha256",
+                "value": "to-be-calculated"
+              },
+              "entryPoint": "app"
+            },
+            "darwin-amd64": {
+              "url": "https://github.com/jongio/azd-app/releases/download/cli-v0.1.0/app-darwin-amd64.tar.gz",
+              "checksum": {
+                "algorithm": "sha256",
+                "value": "to-be-calculated"
+              },
+              "entryPoint": "app"
+            },
+            "darwin-arm64": {
+              "url": "https://github.com/jongio/azd-app/releases/download/cli-v0.1.0/app-darwin-arm64.tar.gz",
+              "checksum": {
+                "algorithm": "sha256",
+                "value": "to-be-calculated"
+              },
+              "entryPoint": "app"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

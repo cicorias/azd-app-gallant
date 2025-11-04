@@ -1,0 +1,15 @@
+name: boundary-test-app
+reqs:
+  - id: node
+    minVersion: "18.0.0"
+  - id: python
+    minVersion: "3.9"
+services:
+  web:
+    project: ./web
+    language: node
+    host: containerapp
+  api:
+    project: ./api
+    language: python
+    host: containerapp

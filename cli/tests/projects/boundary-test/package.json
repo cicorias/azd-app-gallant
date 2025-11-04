@@ -1,0 +1,8 @@
+{
+  "name": "parent-project-should-not-be-found",
+  "version": "1.0.0",
+  "description": "This project is outside the azure.yaml workspace and should NOT be detected",
+  "scripts": {
+    "dev": "echo 'This should NOT run'"
+  }
+}

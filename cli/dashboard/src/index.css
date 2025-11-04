@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* Aspire-inspired dark theme */
+    --background: 0 0% 8%;  /* #141414 - very dark background */
+    --foreground: 0 0% 95%;  /* Light text */
+    
+    /* Card backgrounds */
+    --card: 0 0% 12%;  /* #1f1f1f - slightly lighter than bg */
+    --card-foreground: 0 0% 95%;
+    
+    --popover: 0 0% 12%;
+    --popover-foreground: 0 0% 95%;
+    
+    /* Purple primary (Aspire accent) */
+    --primary: 266 100% 70%;  /* Purple accent */
+    --primary-foreground: 0 0% 100%;
+    
+    /* Secondary */
+    --secondary: 0 0% 20%;
+    --secondary-foreground: 0 0% 95%;
+    
+    --muted: 0 0% 25%;
+    --muted-foreground: 0 0% 60%;
+    
+    /* Accent - keeping purple theme */
+    --accent: 266 100% 70%;
+    --accent-foreground: 0 0% 100%;
+    
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 266 100% 70%;
+    --radius: 0.5rem;
+    
+    /* Status colors matching Aspire */
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+    
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+  
+  body {
+    background: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  #root {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+@layer utilities {
+  /* Minimal glass effect for Aspire style */
+  .glass {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Smooth transitions */
+  .transition-all-smooth {
+    transition: all 0.2s ease;
+  }
+}

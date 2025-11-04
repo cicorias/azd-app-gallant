@@ -1,0 +1,90 @@
+# App Extension - Ignore files
+
+# Binaries
+bin/
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Test binaries
+*.test
+
+# Coverage
+*.out
+*.coverage
+coverage
+src/coverage
+
+# Go workspace file
+go.work
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+dist/
+*.tar.gz
+*.zip
+
+# Dependencies
+vendor/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.Python
+*.egg-info/
+.uv/
+.pytest_cache/
+poetry.lock
+
+# Node.js
+node_modules/
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+.npm
+.yarn
+
+# .NET
+obj/
+*.pdb
+*.cache
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Local configuration
+*.local
+.env
+.env.local
+
+# Test fixtures - preserve lock files and manifests in tests/
+!tests/projects/**/package.json
+!tests/projects/**/package-lock.json
+!tests/projects/**/pnpm-lock.yaml
+!tests/projects/**/yarn.lock
+!tests/projects/**/requirements.txt
+!tests/projects/**/.azure/**/.env
+!tests/projects/**/pyproject.toml
+!tests/projects/**/poetry.lock
+!tests/projects/**/uv.lock
+!tests/projects/**/*.yaml
+
+# Generated azure.yaml files from integration tests
+tests/projects/node/test-pnpm-project/azure.yaml
+tests/projects/python/test-uv-project/azure.yaml
+tests/projects/aspire-test/azure.yaml

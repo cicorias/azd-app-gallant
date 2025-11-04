@@ -1,0 +1,11 @@
+{
+  "name": "web-service",
+  "version": "1.0.0",
+  "description": "Web service inside workspace - should be found",
+  "scripts": {
+    "dev": "vite"
+  },
+  "dependencies": {
+    "vite": "^5.0.0"
+  }
+}
