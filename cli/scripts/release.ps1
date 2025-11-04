@@ -46,6 +46,49 @@ $ErrorActionPreference = 'Stop'
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $repoRoot = Split-Path -Parent $scriptDir
 
+# Function to update changelog with new version
+function Update-Changelog {
+    param(
+        [string]$Version,
+        [string]$Date
+    )
+    
+    $changelogPath = Join-Path $repoRoot "CHANGELOG.md"
+    if (-not (Test-Path $changelogPath)) {
+        Write-Warning "CHANGELOG.md not found, skipping changelog update"
+        return
+    }
+    
+    $content = Get-Content $changelogPath -Raw
+    
+    # Check if there's an [Unreleased] section with content
+    if ($content -notmatch '## \[Unreleased\]') {
+        Write-Warning "No [Unreleased] section found in CHANGELOG.md"
+        return
+    }
+    
+    # Replace [Unreleased] with the version and date, and add a new [Unreleased] section
+    $newContent = $content -replace '## \[Unreleased\]', "## [Unreleased]`n`n## [$Version] - $Date"
+    
+    # Update the comparison links at the bottom
+    # Find existing version comparison links pattern
+    if ($newContent -match '\[Unreleased\]:\s*https://github\.com/([^/]+)/([^/]+)/compare/([^\.]+)\.\.\.HEAD') {
+        $owner = $Matches[1]
+        $repo = $Matches[2]
+        $lastTag = $Matches[3]
+        
+        # Update Unreleased link to compare from new version
+        $newContent = $newContent -replace '\[Unreleased\]:\s*https://[^\n]+', "[Unreleased]: https://github.com/$owner/$repo/compare/v$Version...HEAD"
+        
+        # Add new version comparison link (insert before existing version links)
+        $versionLink = "[$Version]: https://github.com/$owner/$repo/releases/tag/v$Version"
+        $newContent = $newContent -replace '(\[Unreleased\]:[^\n]+\n)', "`$1$versionLink`n"
+    }
+    
+    Set-Content -Path $changelogPath -Value $newContent -NoNewline
+    Write-Host "✅ Updated CHANGELOG.md" -ForegroundColor Green
+}
+
 # Function to extract changelog notes for a specific version
 function Get-ChangelogNotes {
     param([string]$Version)
@@ -215,13 +258,14 @@ Write-Host "Branch:         $currentBranch" -ForegroundColor White
 Write-Host "Repository:     $(gh repo view --json nameWithOwner -q .nameWithOwner)" -ForegroundColor White
 Write-Host ""
 Write-Host "This will:" -ForegroundColor Yellow
-Write-Host "  1. Update version.txt to $Version" -ForegroundColor Gray
-Write-Host "  2. Commit and push the version change" -ForegroundColor Gray
-Write-Host "  3. Build binaries for all platforms" -ForegroundColor Gray
-Write-Host "  4. Update registry.json with checksums and URLs" -ForegroundColor Gray
-Write-Host "  5. Commit and push registry.json" -ForegroundColor Gray
-Write-Host "  6. Create tag cli-v$Version" -ForegroundColor Gray
-Write-Host "  7. Create a DRAFT release on GitHub" -ForegroundColor Gray
+Write-Host "  1. Update CHANGELOG.md [Unreleased] → [$Version] with today's date" -ForegroundColor Gray
+Write-Host "  2. Update version.txt to $Version" -ForegroundColor Gray
+Write-Host "  3. Commit and push the changelog and version changes" -ForegroundColor Gray
+Write-Host "  4. Trigger GitHub Actions workflow to:" -ForegroundColor Gray
+Write-Host "     • Build binaries for all platforms" -ForegroundColor DarkGray
+Write-Host "     • Update registry.json with checksums and URLs" -ForegroundColor DarkGray
+Write-Host "     • Create tag cli-v$Version" -ForegroundColor DarkGray
+Write-Host "     • Create a DRAFT release on GitHub" -ForegroundColor DarkGray
 Write-Host ""
 Write-Host "After completion, you can:" -ForegroundColor Green
 Write-Host "  • Review the draft release at:" -ForegroundColor Gray
@@ -238,6 +282,34 @@ $confirm = Read-Host "Proceed with creating draft release? (y/N)"
 if ($confirm -ne 'y') {
     Write-Host "Aborted."
     exit 0
+}
+
+Write-Host ""
+Write-Host "📝 Updating CHANGELOG.md..." -ForegroundColor Yellow
+$today = Get-Date -Format "yyyy-MM-dd"
+Update-Changelog -Version $Version -Date $today
+
+Write-Host ""
+Write-Host "📝 Committing changelog and version updates..." -ForegroundColor Yellow
+try {
+    # Stage the changelog if it was updated
+    $changelogPath = Join-Path $repoRoot "CHANGELOG.md"
+    if (Test-Path $changelogPath) {
+        git add $changelogPath
+    }
+    
+    # Commit the changes (both changelog and version.txt will be committed by workflow, but we do it here for local state)
+    $hasChanges = git diff --cached --quiet; $LASTEXITCODE -ne 0
+    if ($hasChanges) {
+        git commit -m "chore: prepare release $Version"
+        git push
+        Write-Host "✅ Changes committed and pushed" -ForegroundColor Green
+    } else {
+        Write-Host "ℹ️  No changelog changes to commit" -ForegroundColor Gray
+    }
+} catch {
+    Write-Warning "Failed to commit changelog: $_"
+    Write-Host "Continuing with release process..." -ForegroundColor Yellow
 }
 
 Write-Host ""

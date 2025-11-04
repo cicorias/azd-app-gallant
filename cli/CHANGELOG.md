@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Fixed `azd app version` not displaying correct version in release binaries - updated GitHub Actions workflows to properly inject version and build time via ldflags
+
 ## [0.1.0] - 2025-11-04
 
 Initial release of azd-app CLI extension.
