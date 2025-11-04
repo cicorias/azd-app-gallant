@@ -304,7 +304,7 @@ func Install() error {
 // Uninstall removes the locally installed extension.
 func Uninstall() error {
 	fmt.Println("Uninstalling extension...")
-	if err := sh.RunV("azd", "extension", "uninstall", "app"); err != nil {
+	if err := sh.RunV("azd", "extension", "uninstall", "jongio.azd.app"); err != nil {
 		return fmt.Errorf("failed to uninstall extension: %w", err)
 	}
 

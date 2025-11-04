@@ -104,10 +104,10 @@ Learn more: [Install Azure Developer CLI](https://learn.microsoft.com/azure/deve
 
 ```bash
 # Add the extension registry
-azd config set extension.registry https://raw.githubusercontent.com/jongio/azd-app/main/registry.json
+azd extension source add -n app -t url -l "https://raw.githubusercontent.com/jongio/azd-app/refs/heads/main/registry.json"
 
 # Install the extension
-azd extension install app
+azd extension install jongio.azd.app
 ```
 
 ### Try It Out

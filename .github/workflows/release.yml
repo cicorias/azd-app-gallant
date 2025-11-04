@@ -125,14 +125,14 @@ jobs:
            --arg darwin_amd64 "${{ steps.checksums.outputs.DARWIN_AMD64_SHA }}" \
            --arg darwin_arm64 "${{ steps.checksums.outputs.DARWIN_ARM64_SHA }}" \
            '.extensions[0].versions[0].version = $version |
-            .extensions[0].versions[0].artifacts["windows-amd64"].url = "https://github.com/jongio/azd-app/releases/download/cli-v\($version)/app-windows-amd64.zip" |
-            .extensions[0].versions[0].artifacts["windows-amd64"].checksum.value = $win |
-            .extensions[0].versions[0].artifacts["linux-amd64"].url = "https://github.com/jongio/azd-app/releases/download/cli-v\($version)/app-linux-amd64.tar.gz" |
-            .extensions[0].versions[0].artifacts["linux-amd64"].checksum.value = $linux |
-            .extensions[0].versions[0].artifacts["darwin-amd64"].url = "https://github.com/jongio/azd-app/releases/download/cli-v\($version)/app-darwin-amd64.tar.gz" |
-            .extensions[0].versions[0].artifacts["darwin-amd64"].checksum.value = $darwin_amd64 |
-            .extensions[0].versions[0].artifacts["darwin-arm64"].url = "https://github.com/jongio/azd-app/releases/download/cli-v\($version)/app-darwin-arm64.tar.gz" |
-            .extensions[0].versions[0].artifacts["darwin-arm64"].checksum.value = $darwin_arm64' \
+            .extensions[0].versions[0].artifacts["windows/amd64"].url = "https://github.com/jongio/azd-app/releases/download/cli-v\($version)/app-windows-amd64.zip" |
+            .extensions[0].versions[0].artifacts["windows/amd64"].checksum.value = $win |
+            .extensions[0].versions[0].artifacts["linux/amd64"].url = "https://github.com/jongio/azd-app/releases/download/cli-v\($version)/app-linux-amd64.tar.gz" |
+            .extensions[0].versions[0].artifacts["linux/amd64"].checksum.value = $linux |
+            .extensions[0].versions[0].artifacts["darwin/amd64"].url = "https://github.com/jongio/azd-app/releases/download/cli-v\($version)/app-darwin-amd64.tar.gz" |
+            .extensions[0].versions[0].artifacts["darwin/amd64"].checksum.value = $darwin_amd64 |
+            .extensions[0].versions[0].artifacts["darwin/arm64"].url = "https://github.com/jongio/azd-app/releases/download/cli-v\($version)/app-darwin-arm64.tar.gz" |
+            .extensions[0].versions[0].artifacts["darwin/arm64"].checksum.value = $darwin_arm64' \
            ../registry.json > ../registry.tmp.json && mv ../registry.tmp.json ../registry.json
 
     - name: Extract changelog for this version
