@@ -198,7 +198,7 @@ jobs:
       uses: softprops/action-gh-release@v2
       with:
         tag_name: azd-app-cli-v${{ inputs.version }}
-        name: CLI v${{ inputs.version }}
+        name: azd-app-cli v${{ inputs.version }}
         body_path: release-assets/release-notes.md
         files: |
           cli/app-windows-amd64.zip
