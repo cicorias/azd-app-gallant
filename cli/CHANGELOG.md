@@ -5,7 +5,7 @@ All notable changes to the App Extension will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.1.1] - 2025-11-04
 
 ### Fixed
 - `azd app reqs --generate` now automatically creates the `reqs` section in `azure.yaml` if it doesn't exist, instead of failing with "section 'reqs' not found in YAML" error

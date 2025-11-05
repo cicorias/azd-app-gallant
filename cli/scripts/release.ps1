@@ -109,6 +109,27 @@ function Get-ChangelogNotes {
     return "See CHANGELOG.md for details."
 }
 
+# Function to extract Unreleased changelog content
+function Get-UnreleasedChangelog {
+    $changelogPath = Join-Path $cliRoot "CHANGELOG.md"
+    if (-not (Test-Path $changelogPath)) {
+        return $null
+    }
+    
+    $content = Get-Content $changelogPath -Raw
+    
+    # Match content between [Unreleased] and the next version section
+    $pattern = "## \[Unreleased\][^\n]*\n(.*?)(?=\n## \[|$)"
+    if ($content -match $pattern) {
+        $unreleasedContent = $Matches[1].Trim()
+        if ($unreleasedContent) {
+            return $unreleasedContent
+        }
+    }
+    
+    return $null
+}
+
 # Function to get the last released version from git tags
 function Get-CurrentVersion {
     # Use latest git tag as the source of truth for releases
@@ -257,6 +278,21 @@ Write-Host "Tag:            azd-app-cli-v$Version" -ForegroundColor White
 Write-Host "Branch:         $currentBranch" -ForegroundColor White
 Write-Host "Repository:     $(gh repo view --json nameWithOwner -q .nameWithOwner)" -ForegroundColor White
 Write-Host ""
+
+# Show what will be included in the release notes
+$unreleasedNotes = Get-UnreleasedChangelog
+if ($unreleasedNotes) {
+    Write-Host "📝 Release Notes Preview:" -ForegroundColor Cyan
+    Write-Host "─────────────────────────" -ForegroundColor Cyan
+    Write-Host $unreleasedNotes -ForegroundColor Gray
+    Write-Host "─────────────────────────" -ForegroundColor Cyan
+    Write-Host ""
+} else {
+    Write-Warning "⚠️  No content found in [Unreleased] section of CHANGELOG.md"
+    Write-Host "   The release will be created with minimal changelog information." -ForegroundColor Yellow
+    Write-Host ""
+}
+
 Write-Host "This will:" -ForegroundColor Yellow
 Write-Host "  1. Update CHANGELOG.md [Unreleased] → [$Version] with today's date" -ForegroundColor Gray
 Write-Host "  2. Update version.txt to $Version" -ForegroundColor Gray
